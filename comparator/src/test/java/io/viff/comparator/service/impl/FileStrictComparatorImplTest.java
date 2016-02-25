@@ -23,8 +23,8 @@ import static org.hamcrest.Matchers.lessThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ComparatorApplication.class)
-public class FileComparatorImplTest {
-    private FileComparator fileComparator = new FileComparatorImpl();
+public class FileStrictComparatorImplTest {
+    private FileComparator fileComparator = new FileStrictComparatorImpl();
 
     @Autowired
     ApplicationContext context;

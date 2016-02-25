@@ -17,9 +17,9 @@ import java.util.List;
 /**
  * Created by tbzhang on 2/24/16.
  */
-public class FileComparatorImpl implements FileComparator {
+public class FileStrictComparatorImpl implements FileComparator {
 
-    private static final Logger logger = Logger.getLogger(FileComparatorImpl.class);
+    private static final Logger logger = Logger.getLogger(FileStrictComparatorImpl.class);
 
     private static final int defaultDiffRGB = 0x99ff0000;
 
@@ -34,12 +34,13 @@ public class FileComparatorImpl implements FileComparator {
             int targetImageHeight = targetImage.getHeight();
             int originImageWidth = originImage.getWidth();
             int targetImageWidth = targetImage.getWidth();
-            double denominator = originImageHeight * originImageWidth;
+            double denominator = 0;
             int member = 0;
 
             List<Point> diffPoints = Lists.newArrayList();
 
             if ((originImageHeight == targetImageHeight) && (originImageWidth == targetImageWidth)) {
+                denominator = originImageHeight * originImageWidth;
                 member = calculateSameSizeImageDiff(originImage, targetImage, diffPoints);
             } else {
 
