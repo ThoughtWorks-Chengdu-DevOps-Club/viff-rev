@@ -16,7 +16,6 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.AdditionalMatchers.lt;
 
 /**
  * Created by tbzhang on 2/24/16.
