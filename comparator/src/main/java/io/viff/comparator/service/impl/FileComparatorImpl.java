@@ -1,6 +1,7 @@
 package io.viff.comparator.service.impl;
 
 import io.viff.comparator.domain.CompareResult;
+import io.viff.comparator.domain.FileStorage;
 import io.viff.comparator.domain.Point;
 import io.viff.comparator.domain.Storable;
 import io.viff.comparator.service.FileComparator;
@@ -63,18 +64,21 @@ public class FileComparatorImpl implements FileComparator {
 
             }
 
-            File output = new File("result.png");
+
+            FileStorage resultStorage = new FileStorage(new File("result.png"));
             for (Point point : diffPoints) {
                 originImage.setRGB(point.getX(), point.getY(), point.getRgb());
             }
+            ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
+
             result.setSimilarity(member / denominator);
-            result.setResultPath(output.getAbsolutePath());
-            result.setSame(member == denominator );
-            ImageIO.write(originImage, "png", output);
+            result.setResult(resultStorage);
+            result.setSame(member == denominator);
+
         } catch (IOException e) {
             e.printStackTrace();
-            result.setSimilarity(100.00d);
-            result.setResultPath(null);
+            result.setSimilarity(0d);
+            result.setResult(null);
             result.setSame(false);
         }
         return result;

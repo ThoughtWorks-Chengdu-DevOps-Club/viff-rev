@@ -7,8 +7,11 @@ import java.io.File;
  */
 public class FileStorage implements Storable {
 
-    private String filePath;
+    private File file;
 
+    public FileStorage(File file) {
+        this.file = file;
+    }
 
     @Override
     public void Store(Object o) {
@@ -16,19 +19,19 @@ public class FileStorage implements Storable {
 
     @Override
     public String getInternalAccessiblePath() {
-        return new File(filePath).getAbsolutePath();
+        return file.getAbsolutePath();
     }
 
     @Override
     public String getExternalAccessiblePath() {
-        return new File(filePath).getAbsolutePath();
+        return file.getAbsolutePath();
     }
 
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    @Override
+    public String toString() {
+        return "FileStorage{" +
+                "internal path=" + getInternalAccessiblePath() + ", " +
+                "external path=" + getExternalAccessiblePath() +
+                '}';
     }
 }
