@@ -16,11 +16,7 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
-
-/**
- * Created by tbzhang on 2/24/16.
- */
-
+g
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ComparatorApplication.class)
 public class FileStrictComparatorImplTest {
