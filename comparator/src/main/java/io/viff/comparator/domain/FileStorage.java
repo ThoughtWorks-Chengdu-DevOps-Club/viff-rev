@@ -14,10 +14,6 @@ public class FileStorage implements Storable {
     }
 
     @Override
-    public void Store(Object o) {
-    }
-
-    @Override
     public String getInternalAccessiblePath() {
         return file.getAbsolutePath();
     }

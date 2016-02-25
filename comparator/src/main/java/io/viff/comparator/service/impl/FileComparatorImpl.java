@@ -40,36 +40,12 @@ public class FileComparatorImpl implements FileComparator {
             List<Point> diffPoints = Lists.newArrayList();
 
             if ((originImageHeight == targetImageHeight) && (originImageWidth == targetImageWidth)) {
-                for (int x = 0; x < originImageWidth; x++) {
-                    for (int y = 0; y < originImageHeight; y++) {
-                        int originImageRGB = originImage.getRGB(x, y);
-                        int targetImageRGB = targetImage.getRGB(x, y);
-
-                        int originRed = (originImageRGB >> 16) & 0xff;
-                        int originGreen = (originImageRGB >> 8) & 0xff;
-                        int originBlue = originImageRGB & 0xff;
-
-                        int targetRed = (targetImageRGB >> 16) & 0xff;
-                        int targetGreen = (targetImageRGB >> 8) & 0xff;
-                        int targetBlue = targetImageRGB & 0xff;
-                        int diff = Math.abs(originRed - targetRed) + Math.abs(originBlue - targetBlue) + Math.abs(originGreen - targetGreen);
-                        if (diff > 0) {
-                            diffPoints.add(new Point(x, y, defaultDiffRGB));
-                        } else {
-                            member++;
-                        }
-                    }
-                }
+                member = calculateSameSizeImageDiff(originImage, targetImage, originImageHeight, originImageWidth, member, diffPoints);
             } else {
 
             }
 
-
-            FileStorage resultStorage = new FileStorage(new File("result.png"));
-            for (Point point : diffPoints) {
-                originImage.setRGB(point.getX(), point.getY(), point.getRgb());
-            }
-            ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
+            FileStorage resultStorage = renderDiffImage(originImage, diffPoints);
 
             result.setSimilarity(member / denominator);
             result.setDiff(resultStorage);
@@ -82,6 +58,39 @@ public class FileComparatorImpl implements FileComparator {
             result.setSame(false);
         }
         return result;
+    }
+
+    private FileStorage renderDiffImage(BufferedImage originImage, List<Point> diffPoints) throws IOException {
+        FileStorage resultStorage = new FileStorage(new File("result.png"));
+        for (Point point : diffPoints) {
+            originImage.setRGB(point.getX(), point.getY(), point.getRgb());
+        }
+        ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
+        return resultStorage;
+    }
+
+    private double calculateSameSizeImageDiff(BufferedImage originImage, BufferedImage targetImage, int originImageHeight, int originImageWidth, double member, List<Point> diffPoints) {
+        for (int x = 0; x < originImageWidth; x++) {
+            for (int y = 0; y < originImageHeight; y++) {
+                int originImageRGB = originImage.getRGB(x, y);
+                int targetImageRGB = targetImage.getRGB(x, y);
+
+                int originRed = (originImageRGB >> 16) & 0xff;
+                int originGreen = (originImageRGB >> 8) & 0xff;
+                int originBlue = originImageRGB & 0xff;
+
+                int targetRed = (targetImageRGB >> 16) & 0xff;
+                int targetGreen = (targetImageRGB >> 8) & 0xff;
+                int targetBlue = targetImageRGB & 0xff;
+                int diff = Math.abs(originRed - targetRed) + Math.abs(originBlue - targetBlue) + Math.abs(originGreen - targetGreen);
+                if (diff > 0) {
+                    diffPoints.add(new Point(x, y, defaultDiffRGB));
+                } else {
+                    member++;
+                }
+            }
+        }
+        return member;
     }
 
 
