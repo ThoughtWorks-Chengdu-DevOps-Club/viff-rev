@@ -16,7 +16,8 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
-g
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ComparatorApplication.class)
 public class FileStrictComparatorImplTest {
@@ -32,8 +33,7 @@ public class FileStrictComparatorImplTest {
         FileStorage fileA = new FileStorage(context.getResource("tc_1_1.png").getFile());
         FileStorage fileB = new FileStorage(context.getResource("tc_1_1.png").getFile());
 
-        CompareResult result = fileComparator.compare(fileA,
-                fileB);
+        CompareResult result = fileComparator.compare(fileA, fileB);
         assertThat(result.getSimilarity(), is(1d));
         System.out.println("cost:" + (new Date().getTime() - start));
     }
