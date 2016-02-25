@@ -3,7 +3,7 @@ package io.viff.comparator.domain;
 
 public class CompareResult {
     private double similarity;
-    private Storable result;
+    private Storable diff;
     private boolean isSame;
 
     public double getSimilarity() {
@@ -14,12 +14,12 @@ public class CompareResult {
         this.similarity = similarity;
     }
 
-    public Storable getResult() {
-        return result;
+    public Storable getDiff() {
+        return diff;
     }
 
-    public void setResult(Storable result) {
-        this.result = result;
+    public void setDiff(Storable diff) {
+        this.diff = diff;
     }
 
     public boolean isSame() {
@@ -34,7 +34,7 @@ public class CompareResult {
     public String toString() {
         return "CompareResult{" +
                 "similarity=" + similarity +
-                ", result='" + result + '\'' +
+                ", diff='" + diff + '\'' +
                 ", isSame=" + isSame +
                 '}';
     }

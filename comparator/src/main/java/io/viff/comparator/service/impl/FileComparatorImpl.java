@@ -72,13 +72,13 @@ public class FileComparatorImpl implements FileComparator {
             ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
 
             result.setSimilarity(member / denominator);
-            result.setResult(resultStorage);
+            result.setDiff(resultStorage);
             result.setSame(member == denominator);
 
         } catch (IOException e) {
             e.printStackTrace();
             result.setSimilarity(0d);
-            result.setResult(null);
+            result.setDiff(null);
             result.setSame(false);
         }
         return result;

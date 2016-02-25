@@ -29,6 +29,7 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-jersey')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.hamcrest:hamcrest-library:1.3")
 }
 
 
