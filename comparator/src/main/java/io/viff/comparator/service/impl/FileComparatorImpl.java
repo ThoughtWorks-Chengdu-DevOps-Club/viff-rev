@@ -35,12 +35,12 @@ public class FileComparatorImpl implements FileComparator {
             int originImageWidth = originImage.getWidth();
             int targetImageWidth = targetImage.getWidth();
             double denominator = originImageHeight * originImageWidth;
-            double member = 0;
+            int member = 0;
 
             List<Point> diffPoints = Lists.newArrayList();
 
             if ((originImageHeight == targetImageHeight) && (originImageWidth == targetImageWidth)) {
-                member = calculateSameSizeImageDiff(originImage, targetImage, originImageHeight, originImageWidth, member, diffPoints);
+                member = calculateSameSizeImageDiff(originImage, targetImage, diffPoints);
             } else {
 
             }
@@ -69,9 +69,10 @@ public class FileComparatorImpl implements FileComparator {
         return resultStorage;
     }
 
-    private double calculateSameSizeImageDiff(BufferedImage originImage, BufferedImage targetImage, int originImageHeight, int originImageWidth, double member, List<Point> diffPoints) {
-        for (int x = 0; x < originImageWidth; x++) {
-            for (int y = 0; y < originImageHeight; y++) {
+    private int calculateSameSizeImageDiff(BufferedImage originImage, BufferedImage targetImage, List<Point> diffPoints) {
+        int member = 0;
+        for (int x = 0; x < originImage.getWidth(); x++) {
+            for (int y = 0; y < originImage.getHeight(); y++) {
                 int originImageRGB = originImage.getRGB(x, y);
                 int targetImageRGB = targetImage.getRGB(x, y);
 
