@@ -3,10 +3,11 @@ package io.viff.comparator.service.impl;
 import io.viff.comparator.ComparatorApplication;
 import io.viff.comparator.domain.CompareResult;
 import io.viff.comparator.domain.FileStorage;
-import io.viff.comparator.service.FileComparator;
+import io.viff.comparator.service.Comparator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,8 +21,11 @@ import static org.hamcrest.Matchers.lessThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ComparatorApplication.class)
-public class FileStrictComparatorImplTest {
-    private FileComparator fileComparator = new FileStrictComparatorImpl();
+public class FileStrictComparatorTest {
+
+    @Autowired
+    @Qualifier("fileStrictComparator")
+    private Comparator comparator;
 
     @Autowired
     ApplicationContext context;
@@ -33,7 +37,8 @@ public class FileStrictComparatorImplTest {
         FileStorage fileA = new FileStorage(context.getResource("tc_1_1.png").getFile());
         FileStorage fileB = new FileStorage(context.getResource("tc_1_1.png").getFile());
 
-        CompareResult result = fileComparator.compare(fileA, fileB);
+        CompareResult result = comparator.compare(fileA,
+                fileB);
         assertThat(result.getSimilarity(), is(1d));
         System.out.println("cost:" + (new Date().getTime() - start));
     }
@@ -46,7 +51,7 @@ public class FileStrictComparatorImplTest {
         FileStorage fileA = new FileStorage(context.getResource("tc_1_1.png").getFile());
         FileStorage fileB = new FileStorage(context.getResource("tc_1_2.png").getFile());
 
-        CompareResult result = fileComparator.compare(fileA, fileB);
+        CompareResult result = comparator.compare(fileA, fileB);
         assertThat(result.getSimilarity(), is(lessThan(1.0)));
         System.out.println("cost:" + (new Date().getTime() - start));
 

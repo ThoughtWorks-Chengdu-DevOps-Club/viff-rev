@@ -6,12 +6,10 @@ package io.viff.comparator.domain;
 public class Point {
     private int x;
     private int y;
-    private int rgb;
 
-    public Point(int x, int y, int rgb) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        this.rgb = rgb;
     }
 
     public int getX() {
@@ -30,11 +28,4 @@ public class Point {
         this.y = y;
     }
 
-    public int getRgb() {
-        return rgb;
-    }
-
-    public void setRgb(int rgb) {
-        this.rgb = rgb;
-    }
 }
