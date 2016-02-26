@@ -1,24 +1,39 @@
 package io.viff.comparator.service.impl;
 
-import io.viff.comparator.domain.*;
+import io.viff.comparator.domain.CompareResult;
+import io.viff.comparator.domain.DiffResult;
+import io.viff.comparator.domain.Storable;
 import io.viff.comparator.service.Comparator;
-import io.viff.comparator.service.utils.ComparatorUtils;
+import io.viff.comparator.service.DiffImageRenderer;
+import io.viff.comparator.service.ImageDiffAlgorithm;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 
 @Service("fileStrictComparator")
-public class FileStrictComparatorImpl implements Comparator {
+public class FileStrictComparator implements Comparator {
 
-    private static final Logger logger = Logger.getLogger(FileStrictComparatorImpl.class);
+    private static final Logger logger = Logger.getLogger(FileStrictComparator.class);
 
-    private static final int defaultDiffRGB = 0x99ff0000;
+
+    private int defaultDiffRGB = 0x99ff0000;
+
+    @Autowired
+    @Qualifier("strictImageDiffAlgorithm")
+    private ImageDiffAlgorithm strictImageDiffAlgorithm;
+
+    @Autowired
+    @Qualifier("defaultDiffImageRenderer")
+    private DiffImageRenderer defaultDiffImageRenderer;
+
 
     @Override
     public CompareResult compare(Storable origin, Storable target) {
@@ -27,9 +42,9 @@ public class FileStrictComparatorImpl implements Comparator {
             BufferedImage originImage = ImageIO.read(new File(origin.getInternalAccessiblePath()));
             BufferedImage targetImage = ImageIO.read(new File(target.getInternalAccessiblePath()));
 
-            DiffResult diffResult = ComparatorUtils.calculateImageDiff(originImage, targetImage, defaultDiffRGB);
+            DiffResult diffResult = strictImageDiffAlgorithm.calculateImageDiff(originImage, targetImage);
 
-            FileStorage resultStorage = renderDiffImage(originImage, diffResult.getDiffPoints());
+            Storable resultStorage = defaultDiffImageRenderer.render(originImage, diffResult.getDiffPoints(), defaultDiffRGB);
 
             result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
             result.setDiff(resultStorage);
@@ -44,14 +59,5 @@ public class FileStrictComparatorImpl implements Comparator {
         return result;
     }
 
-    @Override
-    public FileStorage renderDiffImage(BufferedImage originImage, List<Point> diffPoints) throws IOException {
-        FileStorage resultStorage = new FileStorage(new File("result.png"));
-        for (Point point : diffPoints) {
-            originImage.setRGB(point.getX(), point.getY(), point.getRgb());
-        }
-        ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
-        return resultStorage;
-    }
 
 }

@@ -7,6 +7,7 @@ import io.viff.comparator.service.Comparator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,8 +21,11 @@ import static org.hamcrest.Matchers.lessThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ComparatorApplication.class)
-public class FileStrictComparatorImplTest {
-    private Comparator comparator = new FileStrictComparatorImpl();
+public class FileStrictComparatorTest {
+
+    @Autowired
+    @Qualifier("fileStrictComparator")
+    private Comparator comparator;
 
     @Autowired
     ApplicationContext context;
