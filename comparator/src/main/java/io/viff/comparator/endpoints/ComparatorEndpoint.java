@@ -1,13 +1,18 @@
 package io.viff.comparator.endpoints;
 
+import io.viff.comparator.domain.CompareRequest;
 import io.viff.comparator.domain.CompareResult;
 import io.viff.comparator.domain.UrlStorage;
-import io.viff.comparator.service.impl.NetworkComparatorImpl;
+import io.viff.comparator.service.Comparator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.*;
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 @Component
 @Path("/compare")
@@ -15,16 +20,15 @@ import javax.ws.rs.*;
 public class ComparatorEndpoint {
 
     @Autowired
-    private NetworkComparatorImpl networkComparator;
+    @Qualifier("networkComparator")
+    private Comparator networkComparator;
 
-    @POST
-    public CompareResult compare(@NotNull @FormParam("compareTo") String compareTo,@NotNull @FormParam("compared") String compared){
+    @GET
+    public CompareResult compare(@NotNull @BeanParam CompareRequest compareRequest) {
 
-        UrlStorage FileA = new UrlStorage(compareTo);
-        UrlStorage fileB = new UrlStorage(compared);
+        UrlStorage FileA = new UrlStorage(compareRequest.getFrom());
+        UrlStorage fileB = new UrlStorage(compareRequest.getTo());
 
-        CompareResult result = networkComparator.compare(FileA, fileB);
-
-        return result;
+        return networkComparator.compare(FileA, fileB);
     }
 }
