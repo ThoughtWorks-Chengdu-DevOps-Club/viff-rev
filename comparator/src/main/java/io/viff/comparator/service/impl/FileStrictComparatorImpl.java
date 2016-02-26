@@ -1,12 +1,8 @@
 package io.viff.comparator.service.impl;
 
-import io.viff.comparator.domain.CompareResult;
-import io.viff.comparator.domain.FileStorage;
-import io.viff.comparator.domain.Point;
-import io.viff.comparator.domain.Storable;
+import io.viff.comparator.domain.*;
 import io.viff.comparator.service.Comparator;
 import io.viff.comparator.service.utils.ComparatorUtils;
-import jersey.repackaged.com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by tbzhang on 2/24/16.
- */
-@Service
+
+@Service("fileStrictComparator")
 public class FileStrictComparatorImpl implements Comparator {
 
     private static final Logger logger = Logger.getLogger(FileStrictComparatorImpl.class);
@@ -33,27 +27,13 @@ public class FileStrictComparatorImpl implements Comparator {
             BufferedImage originImage = ImageIO.read(new File(origin.getInternalAccessiblePath()));
             BufferedImage targetImage = ImageIO.read(new File(target.getInternalAccessiblePath()));
 
-            int originImageHeight = originImage.getHeight();
-            int targetImageHeight = targetImage.getHeight();
-            int originImageWidth = originImage.getWidth();
-            int targetImageWidth = targetImage.getWidth();
-            double denominator = 0;
-            int member = 0;
+            DiffResult diffResult = ComparatorUtils.calculateImageDiff(originImage, targetImage, defaultDiffRGB);
 
-            List<Point> diffPoints = Lists.newArrayList();
+            FileStorage resultStorage = renderDiffImage(originImage, diffResult.getDiffPoints());
 
-            if ((originImageHeight == targetImageHeight) && (originImageWidth == targetImageWidth)) {
-                denominator = originImageHeight * originImageWidth;
-                member = ComparatorUtils.calculateSameSizeImageDiff(originImage, targetImage, diffPoints, defaultDiffRGB);
-            } else {
-
-            }
-
-            FileStorage resultStorage = renderDiffImage(originImage, diffPoints);
-
-            result.setSimilarity(member / denominator);
+            result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
             result.setDiff(resultStorage);
-            result.setSame(member == denominator);
+            result.setSame(diffResult.getDiffPoints().size() == 0);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +44,8 @@ public class FileStrictComparatorImpl implements Comparator {
         return result;
     }
 
-    private FileStorage renderDiffImage(BufferedImage originImage, List<Point> diffPoints) throws IOException {
+    @Override
+    public FileStorage renderDiffImage(BufferedImage originImage, List<Point> diffPoints) throws IOException {
         FileStorage resultStorage = new FileStorage(new File("result.png"));
         for (Point point : diffPoints) {
             originImage.setRGB(point.getX(), point.getY(), point.getRgb());

@@ -4,8 +4,6 @@ import io.viff.comparator.domain.*;
 import io.viff.comparator.service.Comparator;
 import io.viff.comparator.service.utils.ComparatorUtils;
 import jersey.repackaged.com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-@Service
+@Service("networkComparator")
 public class NetworkComparatorImpl implements Comparator {
     private static final int defaultDiffRGB = 0x99ff0000;
 
@@ -27,27 +25,13 @@ public class NetworkComparatorImpl implements Comparator {
             BufferedImage originImage = ImageIO.read(new URL(origin.getExternalAccessiblePath()));
             BufferedImage targetImage = ImageIO.read(new URL(target.getExternalAccessiblePath()));
 
+            DiffResult diffResult = ComparatorUtils.calculateImageDiff(originImage, targetImage, defaultDiffRGB);
 
-            int originImageHeight = originImage.getHeight();
-            int targetImageHeight = targetImage.getHeight();
-            int originImageWidth = originImage.getWidth();
-            int targetImageWidth = targetImage.getWidth();
-            double denominator = originImageHeight * originImageWidth;
-            int member = 0;
+            Storable resultStorage = renderDiffImage(originImage, diffResult.getDiffPoints());
 
-            List<Point> diffPoints = Lists.newArrayList();
-
-            if ((originImageHeight == targetImageHeight) && (originImageWidth == targetImageWidth)) {
-                member = ComparatorUtils.calculateSameSizeImageDiff(originImage, targetImage, diffPoints, defaultDiffRGB);
-            } else {
-
-            }
-
-            UrlStorage resultStorage = renderDiffImage(originImage, diffPoints);
-
-            result.setSimilarity(member / denominator);
+            result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
             result.setDiff(resultStorage);
-            result.setSame(member == denominator);
+            result.setSame(diffResult.getDiffPoints().size() == 0);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,9 +40,10 @@ public class NetworkComparatorImpl implements Comparator {
         return  result;
     }
 
-    private UrlStorage renderDiffImage(BufferedImage originImage, List<Point> diffPoints) throws IOException {
+    @Override
+    public Storable renderDiffImage(BufferedImage originImage, List<Point> points) throws IOException {
         UrlStorage resultStorage = new UrlStorage(new File("result.png").getAbsolutePath());
-        for (Point point : diffPoints) {
+        for (Point point : points) {
             originImage.setRGB(point.getX(), point.getY(), point.getRgb());
         }
         ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
