@@ -1,0 +1,15 @@
+server:
+  port: 8008
+
+spring:
+  application:
+    name: viff-storage
+
+application:
+  schema: http
+  host: localhost
+  port: 8008
+  context:
+  file:
+    localPath: /Users/tbzhang/Documents/ApplicationData/viff-storage
+    root: ${application.schema}/${application.host}/${application.port}
