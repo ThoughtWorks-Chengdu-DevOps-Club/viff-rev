@@ -4,5 +4,5 @@ import io.viff.storage.model.ProjectModel;
 
 
 public interface ProjectRepository extends BaseRepository<ProjectModel, Long> {
-
+    ProjectModel findOneByProjectID(String projectID);
 }
