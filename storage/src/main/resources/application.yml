@@ -2,8 +2,18 @@ server:
   port: 8008
 
 spring:
+  profiles:
+    active: local
   application:
     name: viff-storage
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost/viff_storage?useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password:
+
 
 application:
   schema: http
@@ -13,3 +23,9 @@ application:
   file:
     localPath: /Users/tbzhang/Documents/ApplicationData/viff-storage
     root: ${application.schema}/${application.host}/${application.port}
+
+
+flyway:
+  url: ${spring.datasource.url}
+  user: ${spring.datasource.username}
+  password: ${spring.datasource.password}
