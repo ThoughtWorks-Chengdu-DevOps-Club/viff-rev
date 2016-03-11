@@ -11,4 +11,8 @@ public interface BaseRepository<T, ID extends Serializable> extends Repository<T
     T findOne(ID id);
 
     T save(T t);
+
+    void delete(T t);
+
+    T update(T t);
 }
