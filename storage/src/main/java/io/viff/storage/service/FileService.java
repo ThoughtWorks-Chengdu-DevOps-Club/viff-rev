@@ -11,6 +11,6 @@ import java.io.IOException;
 public interface FileService {
     UploadFileResponse save(String projectID, String tag, MultipartFile file) throws IOException;
 
-    UploadFileResponse save(String projectID, String tag, String buildNumber, MultipartFile file) throws IOException;
+    UploadFileResponse save(String projectID, String tag, Integer buildNumber, MultipartFile file) throws IOException;
 
 }

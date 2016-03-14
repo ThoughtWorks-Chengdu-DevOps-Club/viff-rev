@@ -6,13 +6,13 @@ package io.viff.storage.endpoint;
 public class UploadFileResponse {
     private String url;
     private String tag;
-    private String buildNumber;
+    private Integer buildNumber;
 
 
     public UploadFileResponse() {
     }
 
-    public UploadFileResponse(String url, String tag, String buildNumber) {
+    public UploadFileResponse(String url, String tag, Integer buildNumber) {
         this.url = url;
         this.tag = tag;
         this.buildNumber = buildNumber;
@@ -34,11 +34,11 @@ public class UploadFileResponse {
         this.tag = tag;
     }
 
-    public String getBuildNumber() {
+    public Integer getBuildNumber() {
         return buildNumber;
     }
 
-    public void setBuildNumber(String buildNumber) {
+    public void setBuildNumber(Integer buildNumber) {
         this.buildNumber = buildNumber;
     }
 

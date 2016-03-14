@@ -1,12 +1,13 @@
 package io.viff.storage.service.impl;
 
 import io.viff.storage.endpoint.UploadFileResponse;
+import io.viff.storage.model.BuildModel;
 import io.viff.storage.model.ProjectModel;
 import io.viff.storage.model.TagModel;
+import io.viff.storage.repository.BuildRepository;
 import io.viff.storage.repository.ProjectRepository;
 import io.viff.storage.repository.TagRepository;
 import io.viff.storage.service.FileService;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,23 +30,36 @@ public class FileServiceImpl implements FileService {
     @Autowired
     TagRepository tagRepository;
 
+    @Autowired
+    BuildRepository buildRepository;
+
 
     @Override
-    public UploadFileResponse save(String projectID, String tag, MultipartFile file) throws IOException {
-        createParentPath(Paths.get(localPath + "/" + projectID + "/" + tag + "/" + "test/"));
-        Files.copy(file.getInputStream(), Paths.get(localPath + "/" + projectID + "/" + tag + "/" + file.getOriginalFilename()));
+    public UploadFileResponse save(String projectID, String tagName, MultipartFile file) throws IOException {
+
+        ProjectModel projectModel = getProject(projectID);
+        TagModel tag = getTag(projectModel.getId(), tagName);
+        BuildModel buildModel = getBuild(tag);
+
+
+        createParentPath(Paths.get(String.format("%s/%s/%s/%d",
+                localPath, projectID, tagName, buildModel.getBuildNumber())));
+        Files.copy(file.getInputStream(), Paths.get(String.format("%s/%s/%s/%d/%s",
+                localPath, projectID, tagName, buildModel.getBuildNumber(), file.getOriginalFilename())));
+
 
         UploadFileResponse uploadFileResponse = new UploadFileResponse();
-        uploadFileResponse.setTag(tag);
+        uploadFileResponse.setTag(tagName);
+        uploadFileResponse.setBuildNumber(buildModel.getBuildNumber());
+        uploadFileResponse.setUrl("");
 
         return uploadFileResponse;
     }
 
     @Override
-    public UploadFileResponse save(String projectID, String tag, String buildNumber, MultipartFile file) throws IOException {
-        createParentPath(Paths.get(localPath + "/" + projectID + "/" + tag + "/" + buildNumber));
-
-        Files.copy(file.getInputStream(), Paths.get(localPath + "/" + projectID + "/" + tag + "/" + buildNumber + "/" + file.getOriginalFilename()));
+    public UploadFileResponse save(String projectID, String tag, Integer buildNumber, MultipartFile file) throws IOException {
+        createParentPath(Paths.get(String.format("%s/%s/%s/%s", localPath, projectID, tag, buildNumber)));
+        Files.copy(file.getInputStream(), Paths.get(String.format("%s/%s/%s/%s/%s", localPath, projectID, tag, buildNumber, file.getOriginalFilename())));
         return new UploadFileResponse("", tag, buildNumber);
     }
 
@@ -73,6 +87,26 @@ public class FileServiceImpl implements FileService {
         } else {
             return tagModel;
         }
+    }
+
+    private BuildModel getBuild(TagModel tagModel) {
+        BuildModel buildModel = new BuildModel();
+        buildModel.setTagID(tagModel.getId());
+        if (null == tagModel.getLatestBuildID()) {
+            buildModel.setBuildNumber(1);
+            buildRepository.save(buildModel);
+            tagModel.setLatestBuildID(buildModel.getId());
+            tagRepository.save(tagModel);
+        } else {
+            BuildModel lastBuild = buildRepository.findOne(tagModel.getLatestBuildID());
+            // build number增长+1
+            buildModel.setBuildNumber(lastBuild.getBuildNumber() + 1);
+            buildRepository.save(buildModel);
+            tagModel.setLatestBuildID(buildModel.getId());
+            tagRepository.save(tagModel);
+        }
+        return buildModel;
+
     }
 
 

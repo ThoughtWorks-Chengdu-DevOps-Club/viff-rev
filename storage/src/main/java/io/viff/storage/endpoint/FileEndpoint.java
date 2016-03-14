@@ -28,7 +28,7 @@ public class FileEndpoint {
 
     @RequestMapping(method = RequestMethod.POST, value = "/upload/{projectID}/{tag}/{buildNumber}")
     public String upload(@RequestParam("file") MultipartFile file, @PathVariable("projectID") String projectID,
-                         @PathVariable("tag") String tag, @PathVariable("buildNumber") String buildNumber) throws IOException {
+                         @PathVariable("tag") String tag, @PathVariable("buildNumber") Integer buildNumber) throws IOException {
         fileService.save(projectID, tag, buildNumber, file);
         return file.toString();
     }
