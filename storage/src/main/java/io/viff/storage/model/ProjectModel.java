@@ -7,7 +7,7 @@ import javax.persistence.Entity;
  * Created by tbzhang on 3/10/16.
  */
 
-@Entity
+@Entity(name = "project")
 public class ProjectModel extends BaseModel {
 
     @Column(name = "project_id")

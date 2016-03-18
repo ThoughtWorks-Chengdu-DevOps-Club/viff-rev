@@ -11,6 +11,7 @@ import io.viff.storage.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,28 +36,34 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
+    @Transactional
     public UploadFileResponse save(String projectID, String tagName, MultipartFile file) throws IOException {
 
         ProjectModel projectModel = getProject(projectID);
         TagModel tag = getTag(projectModel.getId(), tagName);
         BuildModel buildModel = getBuild(tag);
 
+        tag.setLatestBuildID(buildModel.getId());
+        tagRepository.save(tag);
 
         createParentPath(Paths.get(String.format("%s/%s/%s/%d",
                 localPath, projectID, tagName, buildModel.getBuildNumber())));
-        Files.copy(file.getInputStream(), Paths.get(String.format("%s/%s/%s/%d/%s",
-                localPath, projectID, tagName, buildModel.getBuildNumber(), file.getOriginalFilename())));
+
+        Path target = Paths.get(String.format("%s/%s/%s/%d/%s",
+                localPath, projectID, tagName, buildModel.getBuildNumber(), file.getOriginalFilename()));
+        Files.copy(file.getInputStream(), target);
 
 
         UploadFileResponse uploadFileResponse = new UploadFileResponse();
         uploadFileResponse.setTag(tagName);
         uploadFileResponse.setBuildNumber(buildModel.getBuildNumber());
-        uploadFileResponse.setUrl("");
+        uploadFileResponse.setUrl(target.toString());
 
         return uploadFileResponse;
     }
 
     @Override
+    @Transactional
     public UploadFileResponse save(String projectID, String tag, Integer buildNumber, MultipartFile file) throws IOException {
         createParentPath(Paths.get(String.format("%s/%s/%s/%s", localPath, projectID, tag, buildNumber)));
         Files.copy(file.getInputStream(), Paths.get(String.format("%s/%s/%s/%s/%s", localPath, projectID, tag, buildNumber, file.getOriginalFilename())));

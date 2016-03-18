@@ -3,7 +3,7 @@ package io.viff.storage.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity
+@Entity(name = "viff")
 public class ViffModel extends BaseModel {
     @Column(name = "project_id")
     private Long projectID;

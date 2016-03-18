@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 
-@Entity
+@Entity(name = "tag")
 public class TagModel extends BaseModel {
 
     @Column(name = "project_id")

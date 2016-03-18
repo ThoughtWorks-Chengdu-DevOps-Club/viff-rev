@@ -3,7 +3,7 @@ package io.viff.storage.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity
+@Entity(name = "viff_file_item")
 public class ViffFileItemModel extends BaseModel {
     @Column(name = "origin_file_id")
     private Long originFileID;

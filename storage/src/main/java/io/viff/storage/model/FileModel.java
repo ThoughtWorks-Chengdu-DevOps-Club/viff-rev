@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 
-@Entity
+@Entity(name = "file")
 public class FileModel extends BaseModel {
 
     @Column(name = "file_name",length = 1024)

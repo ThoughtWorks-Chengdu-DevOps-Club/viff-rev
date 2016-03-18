@@ -4,7 +4,7 @@ package io.viff.storage.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity
+@Entity(name = "build")
 public class BuildModel extends BaseModel {
 
     @Column(name = "tag_id")
