@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ViffEndpoint {
 
     @RequestMapping(method = RequestMethod.POST)
-    public String viff() {
-
-        return "";
+    public ViffResponse viff(ViffRequest request) {
+        ViffResponse viffResponse = new ViffResponse();
+        viffResponse.setMetaData(request);
+        return viffResponse;
     }
 
 }

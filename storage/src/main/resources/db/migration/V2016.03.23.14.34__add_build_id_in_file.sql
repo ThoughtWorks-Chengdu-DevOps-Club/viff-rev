@@ -1,0 +1,2 @@
+ALTER TABLE file
+   ADD COLUMN build_id BIGINT(5) NOT NULL

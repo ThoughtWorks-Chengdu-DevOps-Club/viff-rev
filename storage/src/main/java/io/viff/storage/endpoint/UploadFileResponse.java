@@ -5,8 +5,10 @@ package io.viff.storage.endpoint;
  */
 public class UploadFileResponse {
     private String url;
+    private String project;
     private String tag;
     private Integer buildNumber;
+
 
 
     public UploadFileResponse() {
@@ -16,6 +18,14 @@ public class UploadFileResponse {
         this.url = url;
         this.tag = tag;
         this.buildNumber = buildNumber;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public String getUrl() {

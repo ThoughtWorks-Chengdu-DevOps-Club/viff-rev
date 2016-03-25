@@ -13,6 +13,17 @@ public class FileModel extends BaseModel {
     @Column(name = "file_path", length = 2048)
     private String filePath;
 
+    @Column(name = "build_id")
+    private Long buildID;
+
+    public Long getBuildID() {
+        return buildID;
+    }
+
+    public void setBuildID(Long buildID) {
+        this.buildID = buildID;
+    }
+
     public String getFileName() {
         return fileName;
     }
