@@ -25,7 +25,7 @@ import java.nio.file.Paths;
 @Service("fileService")
 public class FileServiceImpl implements FileService {
 
-    @Value("${application.file.localPath}")
+    @Value("${application.files.localPath}")
     private String localPath;
 
     @Autowired
