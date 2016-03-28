@@ -8,15 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.BeanParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 @Component
 @Path("/compare")
 @Produces("application/json")
+@Consumes("application/json")
 public class ComparatorEndpoint {
 
     @Autowired
@@ -24,11 +21,11 @@ public class ComparatorEndpoint {
     private Comparator networkComparator;
 
     @GET
-    public CompareResult compare(@NotNull @BeanParam CompareRequest compareRequest) {
+    public CompareResult compare(@BeanParam CompareRequest compareRequest) {
 
-        UrlStorage FileA = new UrlStorage(compareRequest.getFrom());
+        UrlStorage fileA = new UrlStorage(compareRequest.getFrom());
         UrlStorage fileB = new UrlStorage(compareRequest.getTo());
 
-        return networkComparator.compare(FileA, fileB);
+        return networkComparator.compare(fileA, fileB);
     }
 }

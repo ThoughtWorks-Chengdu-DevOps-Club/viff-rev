@@ -20,12 +20,12 @@ public class DefaultDiffImageRenderer implements DiffImageRenderer {
     private String resultFileName;
 
     @Override
-    public Storable render(BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException {
-        FileStorage resultStorage = new FileStorage(new File("result.png"));
+    public String render(BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException {
+        File resultFile = new File("result.png");
         for (Point point : points) {
             originImage.setRGB(point.getX(), point.getY(), defaultDiffRGB);
         }
-        ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
-        return resultStorage;
+        ImageIO.write(originImage, "png", resultFile);
+        return resultFile.getAbsolutePath();
     }
 }

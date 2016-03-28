@@ -39,10 +39,10 @@ public class NetworkStrictComparator implements Comparator {
 
             DiffResult diffResult = strictImageDiffAlgorithm.calculateImageDiff(originImage, targetImage);
 
-            Storable resultStorage = defaultDiffImageRenderer.render(originImage, diffResult.getDiffPoints(), defaultDiffRGB);
+            String resultPath = defaultDiffImageRenderer.render(originImage, diffResult.getDiffPoints(), defaultDiffRGB);
 
             result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
-            result.setDiff(resultStorage);
+            result.setDiff(resultPath);
             result.setSame(diffResult.getDiffPoints().size() == 0);
 
         } catch (IOException e) {

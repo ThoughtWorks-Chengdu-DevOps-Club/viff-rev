@@ -3,8 +3,16 @@ package io.viff.comparator.domain;
 
 public class CompareResult {
     private double similarity;
-    private Storable diff;
+    private String diff;
     private boolean isSame;
+
+
+    public CompareResult() {
+    }
+
+    public CompareResult(String diff) {
+        this.diff = diff;
+    }
 
     public double getSimilarity() {
         return similarity;
@@ -14,11 +22,11 @@ public class CompareResult {
         this.similarity = similarity;
     }
 
-    public Storable getDiff() {
+    public String getDiff() {
         return diff;
     }
 
-    public void setDiff(Storable diff) {
+    public void setDiff(String diff) {
         this.diff = diff;
     }
 
