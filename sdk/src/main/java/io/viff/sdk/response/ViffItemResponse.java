@@ -5,11 +5,20 @@ public class ViffItemResponse {
     private String imageID;
     private boolean isNew;
     private boolean isSame;
+    private boolean isRemoved;
     private double similarity;
     private String originImageURL;
     private String targetImageURL;
     private String viffImageURL;
 
+
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
+    }
 
     public String getImageID() {
         return imageID;
