@@ -27,3 +27,8 @@ flyway:
   url: ${spring.datasource.url}
   user: ${spring.datasource.username}
   password: ${spring.datasource.password}
+
+eureka:
+  instance:
+    hostname: localhost
+    nonSecurePort: 8761

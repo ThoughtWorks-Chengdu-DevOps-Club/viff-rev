@@ -1,3 +1,8 @@
 application:
   diffColorRGB: 0x99ff0000
   resultFileName: result.png
+
+eureka:
+  instance:
+    hostname: localhost
+    nonSecurePort: 8761
