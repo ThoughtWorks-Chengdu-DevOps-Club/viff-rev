@@ -1,4 +1,4 @@
-package io.viff.storage.endpoint;
+package io.viff.sdk.response;
 
 
 public class ViffItemResponse {

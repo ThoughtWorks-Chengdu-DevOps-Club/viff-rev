@@ -2,7 +2,7 @@ package io.viff.comparator.service.impl;
 
 import io.viff.comparator.domain.FileStorage;
 import io.viff.comparator.domain.Point;
-import io.viff.comparator.domain.Storable;
+import io.viff.sdk.domain.Storable;
 import io.viff.comparator.service.DiffImageRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

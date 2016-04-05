@@ -1,5 +1,6 @@
 package io.viff.storage.endpoint;
 
+import io.viff.sdk.response.UploadFileResponse;
 import io.viff.storage.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

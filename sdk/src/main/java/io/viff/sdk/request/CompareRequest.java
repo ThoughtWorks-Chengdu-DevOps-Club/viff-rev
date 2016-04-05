@@ -1,4 +1,4 @@
-package io.viff.comparator.domain;
+package io.viff.sdk.request;
 
 import javax.ws.rs.QueryParam;
 

@@ -1,6 +1,7 @@
 package io.viff.storage.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.viff.sdk.response.UploadFileResponse;
 import io.viff.storage.StorageApplication;
 import org.junit.After;
 import org.junit.Before;

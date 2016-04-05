@@ -1,7 +1,7 @@
 package io.viff.comparator.service;
 
 import io.viff.comparator.domain.Point;
-import io.viff.comparator.domain.Storable;
+import io.viff.sdk.domain.Storable;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

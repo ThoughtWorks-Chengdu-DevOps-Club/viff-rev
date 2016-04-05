@@ -1,15 +1,14 @@
 package io.viff.comparator.service.impl;
 
-import io.viff.comparator.domain.CompareResult;
+import io.viff.sdk.response.CompareResult;
 import io.viff.comparator.domain.DiffResult;
-import io.viff.comparator.domain.Storable;
+import io.viff.sdk.domain.Storable;
 import io.viff.comparator.service.Comparator;
 import io.viff.comparator.service.DiffImageRenderer;
 import io.viff.comparator.service.ImageDiffAlgorithm;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;

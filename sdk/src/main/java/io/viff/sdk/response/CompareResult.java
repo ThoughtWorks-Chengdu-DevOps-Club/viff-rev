@@ -1,5 +1,7 @@
-package io.viff.comparator.domain;
+package io.viff.sdk.response;
 
+
+import io.viff.sdk.domain.Storable;
 
 public class CompareResult {
     private double similarity;

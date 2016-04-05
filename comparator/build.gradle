@@ -36,7 +36,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-jersey')
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
     compile('org.springframework.cloud:spring-cloud-starter-feign')
-    compile proejct(":sdk")
+    compile project(":sdk")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.hamcrest:hamcrest-library:1.3")
 }

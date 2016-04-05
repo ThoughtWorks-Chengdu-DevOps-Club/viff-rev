@@ -1,9 +1,9 @@
 package io.viff.comparator.endpoints;
 
-import io.viff.comparator.domain.CompareRequest;
-import io.viff.comparator.domain.CompareResult;
+import io.viff.sdk.response.CompareResult;
 import io.viff.comparator.domain.UrlStorage;
 import io.viff.comparator.service.Comparator;
+import io.viff.sdk.request.CompareRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
