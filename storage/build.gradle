@@ -40,6 +40,7 @@ dependencies {
     compile('org.flywaydb:flyway-core:4.0')
     compile('mysql:mysql-connector-java')
     compile('joda-time:joda-time:2.9.2')
+    compile proejct(":sdk")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.hamcrest:hamcrest-library:1.3")
 }
