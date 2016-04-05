@@ -61,7 +61,7 @@ public class ViffServiceImpl implements ViffService {
         for (Map.Entry<String, FileModel> originFileEntry : originFileMap.entrySet()) {
             if (targetFileMap.containsKey(originFileEntry.getKey())) {
                 CompareRequest compareRequest = new CompareRequest(originFileEntry.getValue().getFilePath(), targetFileMap.get(originFileEntry.getKey()).getFilePath());
-                CompareResult compareResult = comparatorClient.compare(compareRequest);
+                CompareResult compareResult = comparatorClient.compare(compareRequest.getFrom(), compareRequest.getTo());
                 ViffItemResponse viffItemResponse = new ViffItemResponse();
                 viffItemResponse.setImageID(originFileEntry.getValue().getFileName());
                 viffItemResponse.setNew(false);

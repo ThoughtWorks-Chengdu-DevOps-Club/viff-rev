@@ -1,6 +1,12 @@
 application:
   diffColorRGB: 0x99ff0000
-  resultFileName: result.png
+  schema: http
+  host: localhost
+  port: 8008
+  context:
+  files:
+    resultPrefix: viff
+    localPath: viff-storage
 
 eureka:
   instance:

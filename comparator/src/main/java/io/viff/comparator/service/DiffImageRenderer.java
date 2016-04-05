@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface DiffImageRenderer {
 
-    Storable render(BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException;
+    Storable render(String fileName, BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException;
 }

@@ -1,33 +1,30 @@
 package io.viff.comparator.endpoints;
 
-import io.viff.sdk.response.CompareResult;
 import io.viff.comparator.domain.UrlStorage;
 import io.viff.comparator.service.Comparator;
-import io.viff.sdk.request.CompareRequest;
+import io.viff.sdk.response.CompareResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.BeanParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.PathParam;
 
-@Component
-@Path("/compare")
-@Produces("application/json")
+
+@RestController
+@RequestMapping("/compare")
 public class ComparatorEndpoint {
 
     @Autowired
     @Qualifier("networkComparator")
     private Comparator networkComparator;
 
-    @GET
-    public CompareResult compare(@NotNull @BeanParam CompareRequest compareRequest) {
+    @RequestMapping(method = RequestMethod.GET, path = "{from}/{to}")
+    public CompareResult compare(@PathParam("from") String from, @PathParam("to") String to) {
 
-        UrlStorage FileA = new UrlStorage(compareRequest.getFrom());
-        UrlStorage fileB = new UrlStorage(compareRequest.getTo());
+        UrlStorage FileA = new UrlStorage(from);
+        UrlStorage fileB = new UrlStorage(to);
 
         return networkComparator.compare(FileA, fileB);
     }
