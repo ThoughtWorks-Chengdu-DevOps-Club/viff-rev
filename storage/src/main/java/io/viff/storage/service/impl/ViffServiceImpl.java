@@ -61,7 +61,7 @@ public class ViffServiceImpl implements ViffService {
         for (Map.Entry<String, FileModel> originFileEntry : originFileMap.entrySet()) {
             if (targetFileMap.containsKey(originFileEntry.getKey())) {
                 CompareRequest compareRequest = new CompareRequest(originFileEntry.getValue().getFilePath(), targetFileMap.get(originFileEntry.getKey()).getFilePath());
-                CompareResult compareResult = comparatorClient.compare(compareRequest.getFrom(), compareRequest.getTo());
+                CompareResult compareResult = comparatorClient.fsCompare(compareRequest);
                 ViffItemResponse viffItemResponse = new ViffItemResponse();
                 viffItemResponse.setImageID(originFileEntry.getValue().getFileName());
                 viffItemResponse.setNew(false);
@@ -69,7 +69,7 @@ public class ViffServiceImpl implements ViffService {
                 viffItemResponse.setSame(compareResult.getSimilarity() == 1.0d);
                 viffItemResponse.setSimilarity(compareResult.getSimilarity());
                 viffItemResponse.setTargetImageURL(targetFileMap.get(originFileEntry.getKey()).getFilePath());
-                viffItemResponse.setViffImageURL(compareResult.getDiff().getInternalAccessiblePath());
+                viffItemResponse.setViffImageURL(compareResult.getDiff().getInternalAccessPath());
                 result.add(viffItemResponse);
                 targetFileMap.remove(originFileEntry.getKey());
             } else {

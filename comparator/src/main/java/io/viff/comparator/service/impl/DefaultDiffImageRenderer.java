@@ -3,7 +3,7 @@ package io.viff.comparator.service.impl;
 import io.viff.comparator.domain.FileStorage;
 import io.viff.comparator.domain.Point;
 import io.viff.comparator.service.DiffImageRenderer;
-import io.viff.sdk.domain.Storable;
+import io.viff.sdk.domain.Storage;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,16 +27,16 @@ public class DefaultDiffImageRenderer implements DiffImageRenderer {
     private String filePath;
 
     @Override
-    public Storable render(String originFilename, BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException {
+    public Storage render(String originFilename, BufferedImage originImage, List<Point> points, int defaultDiffRGB) throws IOException {
         if (!Files.exists(Paths.get(filePath))) {
             Files.createDirectories(Paths.get(filePath));
         }
-        FileStorage resultStorage = new FileStorage(new File(String.format("%s/%s_%s_%s.png", filePath, prefix, originFilename, randomName(16))));
+        FileStorage storeFile = new FileStorage(new File(String.format("%s/%s_%s_%s.png", filePath, prefix, originFilename, randomName(16))));
         for (Point point : points) {
             originImage.setRGB(point.getX(), point.getY(), defaultDiffRGB);
         }
-        ImageIO.write(originImage, "png", new File(resultStorage.getInternalAccessiblePath()));
-        return resultStorage;
+        ImageIO.write(originImage, "png", new File(storeFile.getInternalAccessiblePath()));
+        return new Storage(storeFile);
     }
 
     private String randomName(int length) {

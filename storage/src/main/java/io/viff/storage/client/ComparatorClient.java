@@ -1,16 +1,25 @@
 package io.viff.storage.client;
 
+import io.viff.sdk.request.CompareRequest;
 import io.viff.sdk.response.CompareResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @FeignClient("viff-comparator")
 public interface ComparatorClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/compare")
-    CompareResult compare(@RequestParam("from") String from, @RequestParam("to") String to);
+    @RequestMapping(method = RequestMethod.POST, value = "/compare/network",
+            produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    CompareResult networkCompare(@RequestBody CompareRequest compareRequest);
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/compare/fs",
+            produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    CompareResult fsCompare(@RequestBody CompareRequest compareRequest);
+
 
 }

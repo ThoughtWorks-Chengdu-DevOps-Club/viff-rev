@@ -5,6 +5,7 @@ import io.viff.comparator.service.Comparator;
 import io.viff.comparator.service.DiffImageRenderer;
 import io.viff.comparator.service.ImageDiffAlgorithm;
 import io.viff.sdk.domain.Storable;
+import io.viff.sdk.domain.Storage;
 import io.viff.sdk.response.CompareResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,7 +42,7 @@ public class NetworkStrictComparator implements Comparator {
 
             DiffResult diffResult = strictImageDiffAlgorithm.calculateImageDiff(originImage, targetImage);
 
-            Storable resultStorage = defaultDiffImageRenderer.render(getFilename(origin.getExternalAccessiblePath()), originImage, diffResult.getDiffPoints(), defaultDiffRGB);
+            Storage resultStorage = defaultDiffImageRenderer.render(getFilename(origin.getExternalAccessiblePath()), originImage, diffResult.getDiffPoints(), defaultDiffRGB);
 
             result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
             result.setDiff(resultStorage);

@@ -1,11 +1,11 @@
 package io.viff.sdk.response;
 
 
-import io.viff.sdk.domain.Storable;
+import io.viff.sdk.domain.Storage;
 
 public class CompareResult {
     private double similarity;
-    private Storable diff;
+    private Storage diff;
     private boolean isSame;
 
     public double getSimilarity() {
@@ -16,11 +16,11 @@ public class CompareResult {
         this.similarity = similarity;
     }
 
-    public Storable getDiff() {
+    public Storage getDiff() {
         return diff;
     }
 
-    public void setDiff(Storable diff) {
+    public void setDiff(Storage diff) {
         this.diff = diff;
     }
 
