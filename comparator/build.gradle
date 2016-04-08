@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.2.RELEASE'
+        springBootVersion = '1.3.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -12,6 +12,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
@@ -21,15 +22,31 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 
+
+
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-jersey')
+    compile('com.google.guava:guava:19.0')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.cloud:spring-cloud-starter-feign')
+    compile project(":sdk")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.hamcrest:hamcrest-library:1.3")
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.BUILD-SNAPSHOT"
+    }
 }
 
 

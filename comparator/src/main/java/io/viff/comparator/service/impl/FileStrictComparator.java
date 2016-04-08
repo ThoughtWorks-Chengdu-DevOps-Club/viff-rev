@@ -1,21 +1,23 @@
 package io.viff.comparator.service.impl;
 
-import io.viff.comparator.domain.CompareResult;
 import io.viff.comparator.domain.DiffResult;
-import io.viff.comparator.domain.Storable;
 import io.viff.comparator.service.Comparator;
 import io.viff.comparator.service.DiffImageRenderer;
 import io.viff.comparator.service.ImageDiffAlgorithm;
+import io.viff.sdk.domain.Storable;
+import io.viff.sdk.domain.Storage;
+import io.viff.sdk.response.CompareResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service("fileStrictComparator")
@@ -44,10 +46,10 @@ public class FileStrictComparator implements Comparator {
 
             DiffResult diffResult = strictImageDiffAlgorithm.calculateImageDiff(originImage, targetImage);
 
-            String resultPath = defaultDiffImageRenderer.render(originImage, diffResult.getDiffPoints(), defaultDiffRGB);
+            Storage resultStorage = defaultDiffImageRenderer.render(getFilename(origin.getInternalAccessiblePath()), originImage, diffResult.getDiffPoints(), defaultDiffRGB);
 
             result.setSimilarity(1 - (diffResult.getDiffPoints().size() / diffResult.getDenominator()));
-            result.setDiff(resultPath);
+            result.setDiff(resultStorage);
             result.setSame(diffResult.getDiffPoints().size() == 0);
 
         } catch (IOException e) {
@@ -57,6 +59,16 @@ public class FileStrictComparator implements Comparator {
             result.setSame(false);
         }
         return result;
+    }
+
+    private String getFilename(String path) {
+        Pattern pattern = Pattern.compile("\\\\/(.*)\\.png");
+        Matcher matcher = pattern.matcher(path);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return "";
+        }
     }
 
 

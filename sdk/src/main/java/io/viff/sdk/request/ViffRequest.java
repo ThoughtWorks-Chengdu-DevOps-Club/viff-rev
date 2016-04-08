@@ -1,14 +1,13 @@
-package io.viff.storage.endpoint;
+package io.viff.sdk.request;
 
 
 public class ViffRequest {
 
     private String projectID;
     private String tagName;
-    private String buildNumber;
-    private String targetProjectID;
+    private Integer buildNumber;
     private String targetTagName;
-    private String targetBuildNumber;
+    private Integer targetBuildNumber;
 
     public String getProjectID() {
         return projectID;
@@ -26,20 +25,12 @@ public class ViffRequest {
         this.tagName = tagName;
     }
 
-    public String getBuildNumber() {
+    public Integer getBuildNumber() {
         return buildNumber;
     }
 
-    public void setBuildNumber(String buildNumber) {
+    public void setBuildNumber(Integer buildNumber) {
         this.buildNumber = buildNumber;
-    }
-
-    public String getTargetProjectID() {
-        return targetProjectID;
-    }
-
-    public void setTargetProjectID(String targetProjectID) {
-        this.targetProjectID = targetProjectID;
     }
 
     public String getTargetTagName() {
@@ -50,11 +41,11 @@ public class ViffRequest {
         this.targetTagName = targetTagName;
     }
 
-    public String getTargetBuildNumber() {
+    public Integer getTargetBuildNumber() {
         return targetBuildNumber;
     }
 
-    public void setTargetBuildNumber(String targetBuildNumber) {
+    public void setTargetBuildNumber(Integer targetBuildNumber) {
         this.targetBuildNumber = targetBuildNumber;
     }
 }

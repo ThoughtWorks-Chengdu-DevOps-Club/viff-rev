@@ -1,7 +1,7 @@
 package io.viff.comparator.service.impl;
 
 import io.viff.comparator.ComparatorApplication;
-import io.viff.comparator.domain.CompareResult;
+import io.viff.sdk.response.CompareResult;
 import io.viff.comparator.domain.FileStorage;
 import io.viff.comparator.service.Comparator;
 import org.junit.Test;

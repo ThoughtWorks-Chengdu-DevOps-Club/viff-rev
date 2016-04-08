@@ -1,8 +1,8 @@
 package io.viff.comparator.service.impl;
 
+import com.google.common.collect.Lists;
 import io.viff.comparator.domain.Point;
 import io.viff.comparator.service.ImageDiffAlgorithm;
-import jersey.repackaged.com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;

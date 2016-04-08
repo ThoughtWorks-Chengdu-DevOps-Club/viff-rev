@@ -1,4 +1,4 @@
-package io.viff.storage.endpoint;
+package io.viff.sdk.response;
 
 /**
  * Created by tbzhang on 3/7/16.
@@ -8,7 +8,6 @@ public class UploadFileResponse {
     private String project;
     private String tag;
     private Integer buildNumber;
-
 
 
     public UploadFileResponse() {
