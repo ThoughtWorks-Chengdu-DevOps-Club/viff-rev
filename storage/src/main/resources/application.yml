@@ -19,6 +19,7 @@ application:
   context:
   files:
     localPath: viff-storage
+    maxSize: 5MB
     root: ${application.schema}/${application.host}/${application.port}
 
 
@@ -26,3 +27,31 @@ flyway:
   url: ${spring.datasource.url}
   user: ${spring.datasource.username}
   password: ${spring.datasource.password}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    metadataMap:
+#      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: true
+
+logging:
+  level:
+    feign: DEBUG

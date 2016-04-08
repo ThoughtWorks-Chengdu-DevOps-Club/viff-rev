@@ -1,4 +1,4 @@
-package io.viff.comparator.domain;
+package io.viff.sdk.request;
 
 import javax.ws.rs.QueryParam;
 
@@ -9,6 +9,14 @@ public class CompareRequest {
 
     @QueryParam("to")
     private String to;
+
+    public CompareRequest() {
+    }
+
+    public CompareRequest(String from, String to) {
+        this.from = from;
+        this.to = to;
+    }
 
     public String getFrom() {
         return from;

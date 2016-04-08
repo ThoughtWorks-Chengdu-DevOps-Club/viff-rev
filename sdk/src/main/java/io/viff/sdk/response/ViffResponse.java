@@ -1,4 +1,6 @@
-package io.viff.storage.endpoint;
+package io.viff.sdk.response;
+
+import io.viff.sdk.request.ViffRequest;
 
 import java.util.List;
 
