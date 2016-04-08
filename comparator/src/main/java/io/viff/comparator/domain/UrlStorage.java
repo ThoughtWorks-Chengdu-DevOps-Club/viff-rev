@@ -1,5 +1,7 @@
 package io.viff.comparator.domain;
 
+import io.viff.sdk.domain.Storable;
+
 public class UrlStorage implements Storable {
     private String url;
 

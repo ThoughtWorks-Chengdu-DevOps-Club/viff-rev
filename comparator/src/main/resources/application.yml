@@ -1,3 +1,30 @@
 application:
   diffColorRGB: 0x99ff0000
-  resultFileName: result.png
+  schema: http
+  host: localhost
+  port: 8008
+  context:
+  files:
+    resultPrefix: viff
+    localPath: viff-storage
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    metadataMap:
+#      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: true
+
+logging:
+  level:
+    feign: DEBUG

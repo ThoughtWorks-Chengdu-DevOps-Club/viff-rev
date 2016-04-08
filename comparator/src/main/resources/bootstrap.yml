@@ -1,3 +1,6 @@
+server:
+  port: 8009
+
 spring:
   application:
     name: viff-comparator

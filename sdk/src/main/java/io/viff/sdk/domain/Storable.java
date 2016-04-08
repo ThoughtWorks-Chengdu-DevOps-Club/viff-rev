@@ -1,4 +1,4 @@
-package io.viff.comparator.domain;
+package io.viff.sdk.domain;
 
 /**
  * Created by tbzhang on 2/25/16.

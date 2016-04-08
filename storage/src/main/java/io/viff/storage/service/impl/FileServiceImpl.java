@@ -1,6 +1,6 @@
 package io.viff.storage.service.impl;
 
-import io.viff.storage.endpoint.UploadFileResponse;
+import io.viff.sdk.response.UploadFileResponse;
 import io.viff.storage.model.BuildModel;
 import io.viff.storage.model.FileModel;
 import io.viff.storage.model.ProjectModel;

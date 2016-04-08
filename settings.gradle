@@ -19,3 +19,5 @@ include 'services:webservice'
 rootProject.name = 'viff-rev'
 include 'comparator'
 include 'storage'
+include 'sdk'
+

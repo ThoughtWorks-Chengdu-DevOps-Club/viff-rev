@@ -1,5 +1,7 @@
 package io.viff.comparator.domain;
 
+import io.viff.sdk.domain.Storable;
+
 import java.io.File;
 
 /**
