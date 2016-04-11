@@ -20,4 +20,4 @@ rootProject.name = 'viff-rev'
 include 'comparator'
 include 'storage'
 include 'sdk'
-
+include 'eureka'
