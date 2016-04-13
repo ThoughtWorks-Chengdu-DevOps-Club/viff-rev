@@ -1,0 +1,23 @@
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+spring:
+  datasource:
+      url: jdbc:mysql://viff-mysql:3306/viff_storage?useSSL=true
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: ?!e#@!fjsd89afsanv8
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://viff-eureka:8761/eureka/
+
+application:
+  files:
+    localPath: /storage

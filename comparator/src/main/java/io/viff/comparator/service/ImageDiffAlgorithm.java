@@ -23,10 +23,14 @@ public abstract class ImageDiffAlgorithm {
             diffResult.setDiffPoints(this.diff(originImage, targetImage));
         } else {
             // todo: add different size comparator
+            diffResult.setDenominator(originImageHeight * originImageWidth);
+            diffResult.setDiffPoints(diffOverlap(originImage, targetImage));
         }
 
         return diffResult;
     }
 
     protected abstract List<Point> diff(BufferedImage originImage, BufferedImage targetImage);
+
+    protected abstract List<Point> diffOverlap(BufferedImage originImage, BufferedImage targetImage);
 }

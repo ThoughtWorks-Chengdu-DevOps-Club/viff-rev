@@ -1,0 +1,3 @@
+FROM mysql
+COPY ./scripts/create_db.sql /create_db.sql
+CMD mysqld --init-file=/create_db.sql

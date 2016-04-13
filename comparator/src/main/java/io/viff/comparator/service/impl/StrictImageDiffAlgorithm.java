@@ -25,4 +25,21 @@ public class StrictImageDiffAlgorithm extends ImageDiffAlgorithm {
         }
         return points;
     }
+
+    @Override
+    protected List<Point> diffOverlap(BufferedImage originImage, BufferedImage targetImage) {
+        int height = originImage.getHeight() > targetImage.getHeight() ? targetImage.getHeight() : originImage.getHeight();
+        int width = originImage.getWidth() > targetImage.getWidth() ? targetImage.getWidth() : originImage.getWidth();
+        List<Point> points = Lists.newArrayList();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int originImageRGB = originImage.getRGB(x, y);
+                int targetImageRGB = targetImage.getRGB(x, y);
+                if (originImageRGB != targetImageRGB) {
+                    points.add(new Point(x, y));
+                }
+            }
+        }
+        return points;
+    }
 }
