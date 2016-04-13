@@ -1,0 +1,18 @@
+version: "2"
+services:
+  viff-storage:
+    build: .
+    image: viff/storage
+    ports:
+      - "8008:8008"
+    links:
+      - viff-mysql
+    extra_hosts:
+      - "viff-eureka:192.168.99.100"
+  viff-mysql:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-db
+    image: viff-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=?!e#@!fjsd89afsanv8

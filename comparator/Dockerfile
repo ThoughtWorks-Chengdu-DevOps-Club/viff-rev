@@ -1,0 +1,8 @@
+FROM java:8
+ENV JAR_FILE comparator-0.0.1-SNAPSHOT.jar
+ENV SPRINGBOOT_PROFILE docker
+ENV JAVA_OPTS "-XX:+PrintGC"
+COPY ./build/libs/comparator-0.0.1-SNAPSHOT.jar /usr/src/
+WORKDIR /usr/src/
+CMD java -jar $JAR_FILE $SPRINGBOOT_PROFILE $JAVA_OPTS
+EXPOSE 8009

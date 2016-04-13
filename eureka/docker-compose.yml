@@ -1,0 +1,7 @@
+version: "2"
+services:
+  viff-eureka:
+    build: .
+    image: viff/viff-eureka
+    ports:
+      - "8761:8761"

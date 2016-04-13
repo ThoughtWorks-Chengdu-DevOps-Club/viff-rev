@@ -1,6 +1,3 @@
-server:
-  port: 8008
-
 spring:
   application:
     name: viff-storage
